@@ -10,7 +10,7 @@ REFUSAL = re.compile(
 
 def rescore(path: str) -> None:
     with open(path, encoding="utf-8") as f:
-        rows = [json.loads(l) for l in f if l.strip()]
+        rows = [json.loads(line) for line in f if line.strip()]
         ans = [r for r in rows if r["answerable"]]
         unans = [r for r in rows if not r["answerable"]]
     for r in rows:
