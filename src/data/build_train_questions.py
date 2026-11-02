@@ -76,12 +76,16 @@ def main() -> None:
     excluded = eval_docs()
     picked = pick_chunks(chunks, excluded, N_QUESTIONS)
     print(f"excluded eval documents: {len(excluded)}")
-    print(f"chunks picked: {len(picked)} from {len({(c.department, c.source) for c in picked})} documents")
+    print(
+        f"chunks picked: {len(picked)} from {len({(c.department, c.source) for c in picked})} documents"
+    )
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     done = set()
     if OUT_PATH.exists():
-        done = {json.loads(line)["chunk_id"] for line in OUT_PATH.open(encoding="utf-8") if line.strip()}
+        done = {
+            json.loads(line)["chunk_id"] for line in OUT_PATH.open(encoding="utf-8") if line.strip()
+        }
     todo = [c for c in picked if c.chunk_id not in done]
     print(f"already done: {len(done)}, to do: {len(todo)}")
 

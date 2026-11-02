@@ -27,11 +27,16 @@ def retrieve_excluding(client, reranker, question, exclude):
 def main() -> None:
     rows = [json.loads(line) for line in IN_PATH.open(encoding="utf-8") if line.strip()]
     rng = random.Random(11)
-    kinds = {r["chunk_id"]: ("unanswerable" if rng.random() < UNANSWERABLE_FRACTION else "answerable") for r in rows}
+    kinds = {
+        r["chunk_id"]: ("unanswerable" if rng.random() < UNANSWERABLE_FRACTION else "answerable")
+        for r in rows
+    }
 
     done = set()
     if OUT_PATH.exists():
-        done = {json.loads(line)["chunk_id"] for line in OUT_PATH.open(encoding="utf-8") if line.strip()}
+        done = {
+            json.loads(line)["chunk_id"] for line in OUT_PATH.open(encoding="utf-8") if line.strip()
+        }
     todo = [r for r in rows if r["chunk_id"] not in done]
     print(f"already processed: {len(done)}, to do: {len(todo)}")
 
