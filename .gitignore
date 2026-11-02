@@ -4,6 +4,7 @@ __pycache__/
 .env
 data/raw/
 data/processed/
+data/train/
 mlruns/
 .ruff_cache/
 .pytest_cache/
