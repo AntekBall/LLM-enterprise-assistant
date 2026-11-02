@@ -1,5 +1,10 @@
+from functools import lru_cache
+
 from src.models.inference import generate
+from src.retrieval.reranker import Reranker
 from src.retrieval.vector_store import get_client, search
+
+POOL = 50
 
 SYSTEM_PROMPT = """You are an assistant that answers questions about company handbook documents.
 Rules:
@@ -21,8 +26,31 @@ def build_messages(question: str, hits) -> list[dict]:
     ]
 
 
-def answer(question: str, departments: list[str] | None = None, top_k: int = 5) -> dict:
-    hits = search(get_client(), question, departments=departments, top_k=top_k)
+@lru_cache(maxsize=1)
+def get_reranker() -> Reranker:
+    return Reranker()
+
+
+def retrieve(
+    question: str,
+    departments: list[str] | None = None,
+    top_k: int = 5,
+    rerank: bool = True,
+):
+    client = get_client()
+    if not rerank:
+        return search(client, question, departments=departments, top_k=top_k)
+    candidates = search(client, question, departments=departments, top_k=POOL)
+    return get_reranker().rerank(question, candidates, top_k=top_k)
+
+
+def answer(
+    question: str,
+    departments: list[str] | None = None,
+    top_k: int = 5,
+    rerank: bool = True,
+) -> dict:
+    hits = retrieve(question, departments, top_k, rerank)
     text = generate(build_messages(question, hits))
     sources = [
         {
