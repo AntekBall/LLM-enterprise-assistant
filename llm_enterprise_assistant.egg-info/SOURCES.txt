@@ -15,8 +15,11 @@ src/data/download_handbook.py
 src/data/loader.py
 src/evaluation/__init__.py
 src/evaluation/evaluate_rag.py
+src/evaluation/evaluate_retrieval.py
+src/evaluation/generate_questions.py
 src/models/__init__.py
 src/models/inference.py
+src/models/rag.py
 src/models/train_lora.py
 src/retrieval/__init__.py
 src/retrieval/embedder.py
