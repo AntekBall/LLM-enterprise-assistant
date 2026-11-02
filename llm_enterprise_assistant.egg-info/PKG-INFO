@@ -10,6 +10,10 @@ Requires-Dist: qdrant-client>=1.20.0
 Requires-Dist: bitsandbytes>=0.50.2
 Requires-Dist: accelerate>=1.15.0
 Requires-Dist: rank-bm25>=0.2.2
+Requires-Dist: fastapi>=0.162.0
+Requires-Dist: uvicorn[standard]>=0.54.0
+Requires-Dist: streamlit>=1.65.0
+Requires-Dist: httpx>=0.28.1
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: ruff; extra == "dev"
