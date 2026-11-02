@@ -10,6 +10,8 @@ src/api/__init__.py
 src/api/app.py
 src/api/main.py
 src/data/__init__.py
+src/data/chunker.py
+src/data/download_handbook.py
 src/data/loader.py
 src/evaluation/__init__.py
 src/evaluation/evaluate_rag.py
@@ -18,5 +20,6 @@ src/models/inference.py
 src/models/train_lora.py
 src/retrieval/__init__.py
 src/retrieval/vector_store.py
+tests/test_chunker.py
 tests/test_loader.py
 tests/test_retrieval.py

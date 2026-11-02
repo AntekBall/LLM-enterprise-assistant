@@ -1,5 +1,7 @@
 pyyaml
 python-dotenv
+torch
+sentence-transformers
 
 [dev]
 pytest
