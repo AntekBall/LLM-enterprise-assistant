@@ -7,6 +7,8 @@ Requires-Dist: python-dotenv
 Requires-Dist: torch
 Requires-Dist: sentence-transformers
 Requires-Dist: qdrant-client>=1.20.0
+Requires-Dist: bitsandbytes>=0.50.2
+Requires-Dist: accelerate>=1.15.0
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: ruff; extra == "dev"

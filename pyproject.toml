@@ -8,6 +8,8 @@ dependencies = [
     "torch",
     "sentence-transformers",
     "qdrant-client>=1.20.0",
+    "bitsandbytes>=0.50.2",
+    "accelerate>=1.15.0",
 ]
 
 [project.optional-dependencies]
