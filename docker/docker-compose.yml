@@ -6,6 +6,29 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
 
+  # One-shot setup: downloads the handbook and builds the Qdrant index.
+  # Run once with: docker compose --profile setup run --rm indexer
+  indexer:
+    profiles: ["setup"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["sh", "-c", "python -m src.data.download_handbook && python -m src.retrieval.build_index"]
+    environment:
+      QDRANT_URL: http://qdrant:6333
+    volumes:
+      - ../data:/app/data
+      - hf_cache:/root/.cache/huggingface
+    depends_on:
+      - qdrant
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
   api:
     build:
       context: ..

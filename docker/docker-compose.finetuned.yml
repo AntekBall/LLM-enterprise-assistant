@@ -1,0 +1,8 @@
+# Optional override: serve the QLoRA-fine-tuned model.
+# docker compose -f docker/docker-compose.yml -f docker/docker-compose.finetuned.yml up
+services:
+  api:
+    environment:
+      ADAPTER_PATH: /app/models/qwen-handbook-lora-v2
+    volumes:
+      - ../models:/app/models:ro
