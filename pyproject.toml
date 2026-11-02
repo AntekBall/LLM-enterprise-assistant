@@ -40,6 +40,8 @@ dev = [
     "ipykernel>=7.3.0",
     "matplotlib>=3.10.9",
     "pandas>=2.3.3",
+    "pytest",
+    "ruff"
 ]
 
 [tool.ruff]
