@@ -1,7 +1,7 @@
 base_model: Qwen/Qwen2.5-7B-Instruct
-adapter_dir: models/qwen-handbook-lora
-train_file: data/train/train.jsonl
-val_file: data/train/val.jsonl
+adapter_dir: models/qwen-handbook-lora-v2
+train_file: data/train/v2_train.jsonl
+val_file: data/train/v2_val.jsonl
 mlflow_experiment: handbook-qlora
 
 lora:
@@ -11,7 +11,7 @@ lora:
   target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
 
 training:
-  epochs: 2
+  epochs: 1
   learning_rate: 1.0e-4
   batch_size: 1
   grad_accum: 16
