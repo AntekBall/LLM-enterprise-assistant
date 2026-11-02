@@ -26,3 +26,9 @@ def test_overlap_repeats_text_between_chunks():
     assert len(chunks) >= 2
     last_words = chunks[0].text.split()[-5:]
     assert " ".join(last_words) in chunks[1].text
+
+
+def test_no_chunk_far_exceeds_max_words():
+    huge = "\n".join(f"- item {i} " + "word " * 20 for i in range(200))
+    chunks = chunk_document(make_doc(f"## List\n\n{huge}"), max_words=100, overlap=10)
+    assert max(len(c.text.split()) for c in chunks) < 200
