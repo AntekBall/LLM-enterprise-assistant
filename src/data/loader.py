@@ -28,7 +28,7 @@ def parse_markdown(raw: str, fallback_title: str) -> tuple[str, str]:
         found = TITLE.search(match.group(1))
         if found and found.group(1):
             title = found.group(1)
-        raw = raw[match.end():]
+        raw = raw[match.end() :]
     text = SHORTCODE.sub("", raw)
     text = IMAGE.sub("", text)
     text = LINK.sub(r"\1", text)

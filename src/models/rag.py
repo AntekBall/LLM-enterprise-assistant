@@ -27,6 +27,7 @@ def build_messages(question: str, hits) -> list[dict]:
         {"role": "user", "content": user},
     ]
 
+
 @lru_cache(maxsize=1)
 def get_reranker() -> Reranker:
     return Reranker()

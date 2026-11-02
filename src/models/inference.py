@@ -29,8 +29,6 @@ def generate(messages: list[dict], max_new_tokens: int = 512) -> str:
         messages, add_generation_prompt=True, return_tensors="pt", return_dict=True
     ).to(model.device)
     with torch.no_grad():
-        output = model.generate(
-            **inputs, max_new_tokens=max_new_tokens, do_sample=False
-        )
-    new_tokens = output[0][inputs["input_ids"].shape[1]:]
+        output = model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=False)
+    new_tokens = output[0][inputs["input_ids"].shape[1] :]
     return tokenizer.decode(new_tokens, skip_special_tokens=True).strip()

@@ -47,7 +47,7 @@ def judge(prompt: str) -> bool | None:
     ).to(model.device)
     with torch.no_grad():
         out = model.generate(**inputs, max_new_tokens=3, do_sample=False)
-    text = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
+    text = tokenizer.decode(out[0][inputs["input_ids"].shape[1] :], skip_special_tokens=True)
     text = text.strip().upper()
     if text.startswith("YES"):
         return True
@@ -69,11 +69,13 @@ def main() -> None:
         r["correct"] = None
         r["faithful"] = None
         if r["answerable"] and not r["refused"]:
-            r["correct"] = judge(CORRECT_PROMPT.format(
-                question=r["question"], reference=r["reference"], answer=r["answer"]))
+            r["correct"] = judge(
+                CORRECT_PROMPT.format(
+                    question=r["question"], reference=r["reference"], answer=r["answer"]
+                )
+            )
         if not r["refused"]:
-            r["faithful"] = judge(FAITHFUL_PROMPT.format(
-                context=r["context"], answer=r["answer"]))
+            r["faithful"] = judge(FAITHFUL_PROMPT.format(context=r["context"], answer=r["answer"]))
         print(f"{i}/{len(rows)}", flush=True)
 
     with OUT_PATH.open("w", encoding="utf-8") as f:
@@ -88,7 +90,9 @@ def main() -> None:
     print(f"\njudge: {JUDGE_MODEL}")
     print(f"answerable ({len(ans)})")
     print(f"  correct (all):           {sum(bool(r['correct']) for r in ans) / len(ans):.2f}")
-    print(f"  correct (source in ctx): {sum(bool(r['correct']) for r in retrieved) / max(len(retrieved), 1):.2f}")
+    print(
+        f"  correct (source in ctx): {sum(bool(r['correct']) for r in retrieved) / max(len(retrieved), 1):.2f}"
+    )
     print(f"  faithful (answered):     {rate(answered, 'faithful')}")
     print(f"unanswerable ({len(unans)})")
     print(f"  faithful (if answered):  {rate([r for r in unans if not r['refused']], 'faithful')}")
@@ -96,7 +100,9 @@ def main() -> None:
     print("\n-- spot check by hand")
     judged = [r for r in rows if r["correct"] is not None]
     for r in random.Random(0).sample(judged, min(8, len(judged))):
-        print(f"\nQ: {r['question']}\nREF: {r['reference']}\nANS: {r['answer']}\nJUDGE correct={r['correct']}")
+        print(
+            f"\nQ: {r['question']}\nREF: {r['reference']}\nANS: {r['answer']}\nJUDGE correct={r['correct']}"
+        )
 
 
 if __name__ == "__main__":

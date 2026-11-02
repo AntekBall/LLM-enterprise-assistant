@@ -4,7 +4,8 @@ import numpy as np
 from qdrant_client import QdrantClient, models
 from rank_bm25 import BM25Okapi
 
-from src.retrieval.vector_store import COLLECTION, search as dense_search
+from src.retrieval.vector_store import COLLECTION
+from src.retrieval.vector_store import search as dense_search
 
 TOKEN = re.compile(r"\w+")
 
@@ -24,8 +25,11 @@ class HybridRetriever:
         offset = None
         while True:
             points, offset = client.scroll(
-                COLLECTION, limit=1000, offset=offset,
-                with_payload=True, with_vectors=False,
+                COLLECTION,
+                limit=1000,
+                offset=offset,
+                with_payload=True,
+                with_vectors=False,
             )
             for p in points:
                 self.ids.append(p.id)
@@ -63,7 +67,9 @@ class HybridRetriever:
         best = sorted(fused, key=fused.get, reverse=True)[:top_k]
         return [
             models.ScoredPoint(
-                id=pid, version=0, score=fused[pid],
+                id=pid,
+                version=0,
+                score=fused[pid],
                 payload=self.payloads[self.pos[pid]],
             )
             for pid in best

@@ -7,7 +7,7 @@ from src.data.loader import load_documents
 from src.models.inference import generate
 
 OUT_PATH = Path("data/processed/eval_candidates.jsonl")
-N_QUESTIONS = 60  
+N_QUESTIONS = 60
 MIN_WORDS, MAX_WORDS = 80, 250
 
 PROMPT = """You write test questions for a company handbook assistant.

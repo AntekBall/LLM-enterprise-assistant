@@ -14,9 +14,11 @@ def get_model() -> SentenceTransformer:
 
 
 def embed_documents(texts: list[str]) -> list[list[float]]:
-    return get_model().encode(
-        texts, batch_size=64, normalize_embeddings=True, show_progress_bar=True
-    ).tolist()
+    return (
+        get_model()
+        .encode(texts, batch_size=64, normalize_embeddings=True, show_progress_bar=True)
+        .tolist()
+    )
 
 
 def embed_query(query: str) -> list[float]:

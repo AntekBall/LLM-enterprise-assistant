@@ -1,10 +1,12 @@
-from qdrant_client import QdrantClient, models
 import os
+
+from qdrant_client import QdrantClient, models
+
 from src.data.chunker import Chunk
 from src.retrieval.embedder import embed_documents, embed_query
 
 COLLECTION = "handbook"
-VECTOR_SIZE = 1024 
+VECTOR_SIZE = 1024
 
 
 def get_client(url: str | None = None) -> QdrantClient:
@@ -17,13 +19,9 @@ def create_collection(client: QdrantClient, recreate: bool = False) -> None:
     if not client.collection_exists(COLLECTION):
         client.create_collection(
             collection_name=COLLECTION,
-            vectors_config=models.VectorParams(
-                size=VECTOR_SIZE, distance=models.Distance.COSINE
-            ),
+            vectors_config=models.VectorParams(size=VECTOR_SIZE, distance=models.Distance.COSINE),
         )
-        client.create_payload_index(
-            COLLECTION, "department", models.PayloadSchemaType.KEYWORD
-        )
+        client.create_payload_index(COLLECTION, "department", models.PayloadSchemaType.KEYWORD)
 
 
 def index_chunks(client: QdrantClient, chunks: list[Chunk], batch_size: int = 256) -> None:
@@ -57,11 +55,7 @@ def search(
     query_filter = None
     if departments is not None:
         query_filter = models.Filter(
-            must=[
-                models.FieldCondition(
-                    key="department", match=models.MatchAny(any=departments)
-                )
-            ]
+            must=[models.FieldCondition(key="department", match=models.MatchAny(any=departments))]
         )
     return client.query_points(
         COLLECTION,

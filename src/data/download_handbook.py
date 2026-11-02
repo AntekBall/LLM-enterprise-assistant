@@ -8,8 +8,15 @@ from pathlib import Path
 REPO_URL = "https://gitlab.com/gitlab-com/content-sites/handbook.git"
 CONTENT_PATH = "content/handbook"
 DEPARTMENTS = [
-    "engineering", "people-group", "finance", "legal", "security", "support",
-    "people-policies", "total-rewards", "hiring",
+    "engineering",
+    "people-group",
+    "finance",
+    "legal",
+    "security",
+    "support",
+    "people-policies",
+    "total-rewards",
+    "hiring",
 ]
 MAX_FILES_PER_DEPARTMENT = 120
 MIN_FILE_BYTES = 1000  # skip near-empty index pages
@@ -31,10 +38,10 @@ def main() -> None:
         for dept in DEPARTMENTS:
             source = repo / CONTENT_PATH / dept
             files = sorted(
-                 (f for f in source.rglob("*.md") if f.stat().st_size >= MIN_FILE_BYTES),
-                    key=lambda f: f.stat().st_size,
+                (f for f in source.rglob("*.md") if f.stat().st_size >= MIN_FILE_BYTES),
+                key=lambda f: f.stat().st_size,
                 reverse=True,
-                )[:MAX_FILES_PER_DEPARTMENT]
+            )[:MAX_FILES_PER_DEPARTMENT]
             target = RAW_DIR / dept
             target.mkdir(parents=True, exist_ok=True)
             for f in files:

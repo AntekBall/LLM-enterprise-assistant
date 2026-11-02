@@ -11,6 +11,7 @@ MODE = sys.argv[2] if len(sys.argv) > 2 else "dense"
 KS = (1, 3, 5, 10)
 POOL = 50
 
+
 def load_questions() -> list[dict]:
     with EVAL_PATH.open(encoding="utf-8") as f:
         records = [json.loads(line) for line in f if line.strip()]

@@ -41,3 +41,10 @@ dev = [
     "matplotlib>=3.10.9",
     "pandas>=2.3.3",
 ]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["notebooks", "generate_project_structure.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

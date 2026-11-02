@@ -20,7 +20,9 @@ def test_build_messages_numbers_passages_and_includes_question():
 
 
 def test_system_prompt_contains_canonical_refusal():
-    assert "I don't have enough information in the provided documents to answer that." in SYSTEM_PROMPT
+    assert (
+        "I don't have enough information in the provided documents to answer that." in SYSTEM_PROMPT
+    )
 
 
 def test_get_client_reads_qdrant_url_from_env(monkeypatch):

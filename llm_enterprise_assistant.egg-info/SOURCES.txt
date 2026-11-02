@@ -30,6 +30,8 @@ src/retrieval/embedder.py
 src/retrieval/hybrid.py
 src/retrieval/reranker.py
 src/retrieval/vector_store.py
+tests/test_api.py
 tests/test_chunker.py
+tests/test_evaluation.py
 tests/test_loader.py
 tests/test_retrieval.py

@@ -24,7 +24,7 @@ def split_sections(text: str) -> list[tuple[str, str]]:
     heading = ""
     last = 0
     for match in HEADING.finditer(text):
-        body = text[last:match.start()].strip()
+        body = text[last : match.start()].strip()
         if body:
             sections.append((heading, body))
         heading = match.group(1).strip()
@@ -33,6 +33,7 @@ def split_sections(text: str) -> list[tuple[str, str]]:
     if body:
         sections.append((heading, body))
     return sections
+
 
 def split_long(para: str, max_words: int) -> list[str]:
     if len(para.split()) <= max_words:
@@ -47,9 +48,7 @@ def split_long(para: str, max_words: int) -> list[str]:
         n = len(part.split())
         if n > max_words:  # a single huge line: cut by words
             words = part.split()
-            out.extend(
-                " ".join(words[i:i + max_words]) for i in range(0, n, max_words)
-            )
+            out.extend(" ".join(words[i : i + max_words]) for i in range(0, n, max_words))
             continue
         if buf and count + n > max_words:
             out.append("\n".join(buf))
@@ -59,7 +58,6 @@ def split_long(para: str, max_words: int) -> list[str]:
     if buf:
         out.append("\n".join(buf))
     return out
-
 
 
 def pack_paragraphs(body: str, max_words: int, overlap: int) -> list[str]:

@@ -7,8 +7,15 @@ from src.models.inference import load_llm
 from src.models.rag import answer, get_reranker
 
 DEPARTMENTS = [
-    "engineering", "finance", "hiring", "legal", "people-group",
-    "people-policies", "security", "support", "total-rewards",
+    "engineering",
+    "finance",
+    "hiring",
+    "legal",
+    "people-group",
+    "people-policies",
+    "security",
+    "support",
+    "total-rewards",
 ]
 
 

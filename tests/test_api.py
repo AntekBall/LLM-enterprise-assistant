@@ -5,10 +5,16 @@ from src.api import main
 
 FAKE = {
     "answer": "20 days. [1]",
-    "sources": [{
-        "n": 1, "source": "a.md", "title": "T", "section": "S",
-        "department": "total-rewards", "score": 0.5,
-    }],
+    "sources": [
+        {
+            "n": 1,
+            "source": "a.md",
+            "title": "T",
+            "section": "S",
+            "department": "total-rewards",
+            "score": 0.5,
+        }
+    ],
 }
 
 
