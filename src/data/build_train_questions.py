@@ -81,7 +81,7 @@ def main() -> None:
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     done = set()
     if OUT_PATH.exists():
-        done = {json.loads(l)["chunk_id"] for l in OUT_PATH.open(encoding="utf-8") if l.strip()}
+        done = {json.loads(line)["chunk_id"] for line in OUT_PATH.open(encoding="utf-8") if line.strip()}
     todo = [c for c in picked if c.chunk_id not in done]
     print(f"already done: {len(done)}, to do: {len(todo)}")
 
