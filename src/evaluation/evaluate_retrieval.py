@@ -3,7 +3,9 @@ from pathlib import Path
 
 from src.retrieval.vector_store import get_client, search
 
-EVAL_PATH = Path("data/processed/eval_candidates.jsonl")
+import sys
+
+EVAL_PATH = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("data/processed/eval_candidates.jsonl")
 KS = (1, 3, 5, 10)
 
 
