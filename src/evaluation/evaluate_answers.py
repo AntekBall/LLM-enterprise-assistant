@@ -20,7 +20,9 @@ def load_questions() -> list[dict]:
 
 
 def is_refusal(text: str) -> bool:
-    return bool(re.search(r"(do not|don.{0,6}t) have enough information", text, re.I))
+    return bool(re.search(
+        r"(do not|don.{0,6}t) have enough information|cannot be answered|not (enough|sufficient) information|passages? (do|does) not",
+        text, re.I))
 
 
 def has_real_citation(text: str) -> bool:
@@ -66,7 +68,7 @@ def main() -> None:
     answered = [r for r in ans if not r["refused"]]
     empty = sum(len(re.sub(r"\[\d+\]", "", r["answer"]).split()) < 4 and not r["refused"] for r in rows)
 
-    
+
     print(f"empty/marker-only answers: {empty}")
     print(f"\nrerank: {RERANK}  top_k: {TOP_K}")
     print(f"answerable ({len(ans)})")
