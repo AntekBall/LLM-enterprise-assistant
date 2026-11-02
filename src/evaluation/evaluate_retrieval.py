@@ -5,6 +5,10 @@ from src.retrieval.vector_store import get_client, search
 
 import sys
 
+from src.retrieval.hybrid import HybridRetriever
+
+
+MODE = sys.argv[2] if len(sys.argv) > 2 else "dense"
 EVAL_PATH = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("data/processed/eval_candidates.jsonl")
 KS = (1, 3, 5, 10)
 
@@ -27,13 +31,18 @@ def find_rank(hits, record) -> int | None:
 
 def main() -> None:
     client = get_client()
+    retriever = HybridRetriever(client) if MODE == "hybrid" else None
     questions = load_questions()
     ranks = []
     for r in questions:
-        hits = search(client, r["question"], top_k=max(KS))
+        if retriever:
+            hits = retriever.search(r["question"], top_k=max(KS))
+        else:
+            hits = search(client, r["question"], top_k=max(KS))
         ranks.append(find_rank(hits, r))
 
     n = len(questions)
+    print(f"mode: {MODE}")
     print(f"questions: {n}")
     for k in KS:
         hit = sum(1 for r in ranks if r is not None and r <= k) / n
