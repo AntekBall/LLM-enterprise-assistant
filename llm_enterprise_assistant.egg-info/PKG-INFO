@@ -6,6 +6,7 @@ Requires-Dist: pyyaml
 Requires-Dist: python-dotenv
 Requires-Dist: torch
 Requires-Dist: sentence-transformers
+Requires-Dist: qdrant-client>=1.20.0
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: ruff; extra == "dev"

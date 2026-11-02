@@ -19,6 +19,7 @@ src/models/__init__.py
 src/models/inference.py
 src/models/train_lora.py
 src/retrieval/__init__.py
+src/retrieval/embedder.py
 src/retrieval/vector_store.py
 tests/test_chunker.py
 tests/test_loader.py

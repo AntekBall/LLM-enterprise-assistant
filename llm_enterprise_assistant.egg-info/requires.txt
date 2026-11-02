@@ -2,6 +2,7 @@ pyyaml
 python-dotenv
 torch
 sentence-transformers
+qdrant-client>=1.20.0
 
 [dev]
 pytest
