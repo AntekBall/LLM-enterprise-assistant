@@ -14,7 +14,7 @@
 {"question": "What is the capital of Australia?", "reference_answer": null, "source": null, "department": null, "keep": true}
 {"question": "How do I bake sourdough bread?", "reference_answer": null, "source": null, "department": null, "keep": true}
 {"question": "What is the exact salary of the CEO?", "reference_answer": null, "source": null, "department": null, "keep": true}
-{"question": "How many vacation days does GitLab give in Japan?", "reference_answer": null, "source": null, "department": null, "keep": true}
+{"question": "How many vacation days does GitLab give in Japan?", "reference_answer": null, "source": null, "department": null, "keep": false}
 {"question": "What is the office dress code at the Berlin headquarters?", "reference_answer": null, "source": null, "department": null, "keep": true}
 {"question": "Which stock price target did the board set for next year?", "reference_answer": null, "source": null, "department": null, "keep": true}
 {"question": "What is the password for the production database?", "reference_answer": null, "source": null, "department": null, "keep": true}

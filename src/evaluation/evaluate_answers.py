@@ -3,6 +3,8 @@ import re
 import sys
 from pathlib import Path
 
+from numpy import empty
+
 from src.models.inference import generate
 from src.models.rag import build_messages, retrieve
 
@@ -18,7 +20,12 @@ def load_questions() -> list[dict]:
 
 
 def is_refusal(text: str) -> bool:
-    return bool(re.search(r"don.t have enough information", text, re.I))
+    return bool(re.search(r"(do not|don.{0,6}t) have enough information", text, re.I))
+
+
+def has_real_citation(text: str) -> bool:
+    stripped = re.sub(r"\[\d+\]", "", text).strip()
+    return bool(re.search(r"\[\d+\]", text)) and len(stripped.split()) >= 4
 
 
 def run_one(r: dict) -> dict:
@@ -32,7 +39,7 @@ def run_one(r: dict) -> dict:
         "reference": r["reference_answer"],
         "answer": ans,
         "refused": is_refusal(ans),
-        "cited": bool(re.search(r"\[\d+\]", ans)),
+        "cited": has_real_citation(ans),
         "retrieved": answerable and any(
             h.payload["source"] == r["source"] and h.payload["department"] == r["department"]
             for h in hits
@@ -57,7 +64,10 @@ def main() -> None:
     ans = [r for r in rows if r["answerable"]]
     unans = [r for r in rows if not r["answerable"]]
     answered = [r for r in ans if not r["refused"]]
+    empty = sum(len(re.sub(r"\[\d+\]", "", r["answer"]).split()) < 4 and not r["refused"] for r in rows)
 
+    
+    print(f"empty/marker-only answers: {empty}")
     print(f"\nrerank: {RERANK}  top_k: {TOP_K}")
     print(f"answerable ({len(ans)})")
     print(f"  source in context:       {sum(r['retrieved'] for r in ans) / len(ans):.2f}")

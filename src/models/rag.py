@@ -6,25 +6,26 @@ from src.retrieval.vector_store import get_client, search
 
 POOL = 50
 
-SYSTEM_PROMPT = """You are an assistant that answers questions about company handbook documents.
+SYSTEM_PROMPT = """You answer questions about company handbook documents using ONLY the numbered passages provided.
+
 Rules:
-- Answer ONLY using the numbered context passages provided.
-- Cite the passages you used with their numbers in square brackets, like [1] or [2][3].
-- If the context does not contain the answer, reply exactly: "I don't have enough information in the provided documents to answer that."
-- Do not use outside knowledge. Be concise."""
+- Write a direct answer in one to three complete sentences, stating the key facts (numbers, names, durations, who/what).
+- After each claim, cite the passage number in square brackets, like [1] or [2][3]. Never answer with only a citation.
+- If the passages state or clearly imply the answer, answer it, including yes/no questions ("Yes, ..." or "No, ...").
+- Only if the passages contain no relevant information, reply exactly: "I don't have enough information in the provided documents to answer that."
+- Do not use outside knowledge. Do not say "based on the provided context" and do not add a "Therefore" summary."""
 
 
 def build_messages(question: str, hits) -> list[dict]:
     context = "\n\n".join(
-        f"[{i}] ({h.payload['title']} > {h.payload['section']})\n{h.payload['text']}"
+        f"Passage {i} ({h.payload['title']} > {h.payload['section']}):\n{h.payload['text']}"
         for i, h in enumerate(hits, start=1)
     )
-    user = f"Context:\n{context}\n\nQuestion: {question}"
+    user = f"{context}\n\nQuestion: {question}"
     return [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user},
     ]
-
 
 @lru_cache(maxsize=1)
 def get_reranker() -> Reranker:
