@@ -1,14 +1,15 @@
 import json
 import random
 from pathlib import Path
-
+import sys
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 JUDGE_MODEL = "microsoft/phi-4"
-IN_PATH = Path("data/train/candidates.jsonl")
-TRAIN_PATH = Path("data/train/train.jsonl")
-VAL_PATH = Path("data/train/val.jsonl")
+IN_PATH = Path(sys.argv[1] if len(sys.argv) > 1 else "data/train/candidates.jsonl")
+PREFIX = sys.argv[2] if len(sys.argv) > 2 else ""
+TRAIN_PATH = Path(f"data/train/{PREFIX}train.jsonl")
+VAL_PATH = Path(f"data/train/{PREFIX}val.jsonl")
 VAL_FRACTION = 0.05
 
 SYSTEM = "You are a strict grader. Reply with only YES or NO."
