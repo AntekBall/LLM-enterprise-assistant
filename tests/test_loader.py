@@ -10,6 +10,24 @@ def test_parse_markdown_strips_front_matter_and_shortcodes():
     assert "\n\n\n" not in text
 
 
+def test_parse_markdown_removes_links_and_invisible_chars():
+    raw = "See [the policy](/handbook/x/) for\u200b details."
+    text, _ = parse_markdown(raw, fallback_title="t")
+    assert text == "See the policy for details."
+
+
+def test_parse_markdown_removes_images():
+    raw = "Before ![diagram](/img/a.png) after."
+    text, _ = parse_markdown(raw, fallback_title="t")
+    assert text == "Before  after."
+
+
+def test_parse_markdown_uses_fallback_title_without_front_matter():
+    text, title = parse_markdown("Just text.", fallback_title="my-file")
+    assert title == "my-file"
+    assert text == "Just text."
+
+
 def test_load_documents_sets_department(tmp_path):
     dept = tmp_path / "legal"
     dept.mkdir()
