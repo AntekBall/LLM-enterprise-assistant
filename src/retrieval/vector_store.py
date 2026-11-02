@@ -1,5 +1,5 @@
 from qdrant_client import QdrantClient, models
-
+import os
 from src.data.chunker import Chunk
 from src.retrieval.embedder import embed_documents, embed_query
 
@@ -7,8 +7,8 @@ COLLECTION = "handbook"
 VECTOR_SIZE = 1024 
 
 
-def get_client(url: str = "http://localhost:6333") -> QdrantClient:
-    return QdrantClient(url=url)
+def get_client(url: str | None = None) -> QdrantClient:
+    return QdrantClient(url=url or os.getenv("QDRANT_URL", "http://localhost:6333"))
 
 
 def create_collection(client: QdrantClient, recreate: bool = False) -> None:
