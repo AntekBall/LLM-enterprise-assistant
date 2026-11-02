@@ -1,6 +1,10 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+import os
 
+from peft import PeftModel
+
+ADAPTER_PATH = os.getenv("ADAPTER_PATH")
 MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 
 _model = None
@@ -20,6 +24,9 @@ def load_llm():
         _model = AutoModelForCausalLM.from_pretrained(
             MODEL_NAME, quantization_config=quant, device_map="cuda"
         )
+        if ADAPTER_PATH:
+            _model = PeftModel.from_pretrained(_model, ADAPTER_PATH)
+            _model.eval()
     return _model, _tokenizer
 
 

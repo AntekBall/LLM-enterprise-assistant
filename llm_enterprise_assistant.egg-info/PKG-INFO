@@ -14,6 +14,10 @@ Requires-Dist: fastapi>=0.162.0
 Requires-Dist: uvicorn[standard]>=0.54.0
 Requires-Dist: streamlit>=1.65.0
 Requires-Dist: httpx>=0.28.1
+Requires-Dist: trl>=1.14.2
+Requires-Dist: peft>=0.21.2
+Requires-Dist: mlflow>=3.17.2
+Requires-Dist: datasets>=5.1.0
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: ruff; extra == "dev"

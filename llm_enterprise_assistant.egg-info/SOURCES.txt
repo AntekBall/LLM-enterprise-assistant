@@ -10,8 +10,11 @@ src/api/__init__.py
 src/api/app.py
 src/api/main.py
 src/data/__init__.py
+src/data/build_train_examples.py
+src/data/build_train_questions.py
 src/data/chunker.py
 src/data/download_handbook.py
+src/data/filter_train.py
 src/data/loader.py
 src/evaluation/__init__.py
 src/evaluation/candidate_depth.py

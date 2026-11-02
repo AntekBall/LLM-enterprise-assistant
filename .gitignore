@@ -8,3 +8,4 @@ data/train/
 mlruns/
 .ruff_cache/
 .pytest_cache/
+models/

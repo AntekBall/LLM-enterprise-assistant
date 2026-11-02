@@ -1,0 +1,20 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+adapter_dir: models/qwen-handbook-lora
+train_file: data/train/train.jsonl
+val_file: data/train/val.jsonl
+mlflow_experiment: handbook-qlora
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+training:
+  epochs: 2
+  learning_rate: 1.0e-4
+  batch_size: 1
+  grad_accum: 16
+  max_length: 3072
+  warmup_ratio: 0.05
+  seed: 42
