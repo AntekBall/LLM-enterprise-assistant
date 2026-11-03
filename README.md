@@ -324,12 +324,26 @@ To serve the **fine-tuned model** instead, add the override file:
 docker compose -f docker/docker-compose.yml -f docker/docker-compose.finetuned.yml up --build
 ```
 
+**Wait for the API to finish starting before you use the UI.** The models are loaded at startup, and on the first run they are also downloaded (several GB), which can take many minutes. Until then the UI shows errors or the API does not respond. Watch the API log (it is already in your terminal if you did not use `-d`), or in another terminal run:
+
+```bash
+docker compose -f docker/docker-compose.yml logs -f api
+```
+
+and wait for this line:
+
+```
+INFO:     Application startup complete.
+```
+
+It is followed by `Uvicorn running on http://0.0.0.0:8000`. If you used the fine-tuned override, add `-f docker/docker-compose.finetuned.yml` to the command. Press Ctrl+C to stop following the logs. The containers keep running if you started them with `-d`.
+
 Then open:
 
 - **UI:** http://localhost:8501
 - **API docs:** http://localhost:8000/docs
 
-The first request is slow because the models are loaded and cached. Later requests are fast.
+After startup, the first question can still take a few seconds longer than later ones.
 
 Check the index and the API:
 
