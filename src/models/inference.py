@@ -1,8 +1,8 @@
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import os
 
+import torch
 from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 ADAPTER_PATH = os.getenv("ADAPTER_PATH")
 MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
